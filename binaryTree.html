@@ -9,6 +9,7 @@
 <body>
     <script>
     function BinaryTree() {
+        // 二叉树构造函数
         var Node = function(key) {
             this.key = key;
             this.left = null;
@@ -16,6 +17,7 @@
         };
 
         var rootNode = null;
+        // 往二叉树插入节点
         var insertNode = function(node, newNode) {
             if (newNode.key < node.key) {
                 if (node.left === null) {
@@ -40,6 +42,7 @@
             }
         };
 
+        // 中序遍历实现
         var inOrderTraverseNode = function(node, callback) {
             if (node !== null) {
                 inOrderTraverseNode(node.left, callback);
@@ -50,6 +53,18 @@
 
         this.inOrderTraverse = function(callback) {
             inOrderTraverseNode(rootNode, callback);
+        }
+
+        // 前序遍历实现
+        var preOrderTraverseNode = function(node, callback) {
+        	if (node !== null) {
+        		callback(node.key, callback);
+        		preOrderTraverseNode(node.left, callback);
+        		preOrderTraverseNode(node.right, callback);
+        	}
+        }
+        this.preOrderTraverse = function(callback) {
+        	preOrderTraverseNode(rootNode, callback);
         }
     }
 
@@ -63,6 +78,8 @@
     }
 
     binaryTree.inOrderTraverse(callback);
+    console.log("------------------分割线------------------")
+    binaryTree.preOrderTraverse(callback);
     </script>
 </body>
 
