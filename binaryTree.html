@@ -57,14 +57,59 @@
 
         // 前序遍历实现
         var preOrderTraverseNode = function(node, callback) {
-        	if (node !== null) {
-        		callback(node.key, callback);
-        		preOrderTraverseNode(node.left, callback);
-        		preOrderTraverseNode(node.right, callback);
-        	}
+            if (node !== null) {
+                callback(node.key, callback);
+                preOrderTraverseNode(node.left, callback);
+                preOrderTraverseNode(node.right, callback);
+            }
         }
         this.preOrderTraverse = function(callback) {
-        	preOrderTraverseNode(rootNode, callback);
+            preOrderTraverseNode(rootNode, callback);
+        }
+
+        //查找二叉树中值最小的节点
+        var minNode = function(node) {
+            if (node) {
+                while (node && node.left !== null) {
+                    node = node.left
+                }
+                return node.key;
+            }
+            return null;
+        }
+        this.min = function() {
+            return minNode(rootNode);
+        }
+
+        // 查找二叉树中值最大的节点
+        var maxNode = function(node) {
+            if (node) {
+                while (node && node.right !== null) {
+                    node = node.right;
+                }
+                return node.key;
+            }
+            return null;
+        }
+        this.max = function() {
+            return maxNode(rootNode);
+        }
+
+        // 查找特定的值
+        var searchNode = function(node, key) {
+            if (node === null) {
+                return false;
+            }
+            if (key < node.key) {
+                return searchNode(node.left, key);
+            } else if (key > node.key) {
+                return searchNode(node.right, key);
+            } else {
+            	return true;
+            }
+        }
+        this.search = function(key) {
+            return searchNode(rootNode, key);
         }
     }
 
@@ -76,6 +121,11 @@
     var callback = function(key) {
         console.log(key);
     }
+
+
+    console.log("二叉树最小值:" + binaryTree.min());
+    console.log("二叉树最大值:" + binaryTree.max());
+    console.log("能否在二叉树中找到19："+ binaryTree.search(19));
 
     binaryTree.inOrderTraverse(callback);
     console.log("------------------分割线------------------")
