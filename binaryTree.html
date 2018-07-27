@@ -105,11 +105,32 @@
             } else if (key > node.key) {
                 return searchNode(node.right, key);
             } else {
-            	return true;
+                return true;
             }
         }
         this.search = function(key) {
             return searchNode(rootNode, key);
+        }
+
+        // 删除叶子节点
+        var removeNode = function(node, key) {
+            if (node.key === null) {
+                return null;
+            }
+            if (key < node.key) {
+                node.left = removeNode(node.left, key);
+                return node;
+            } else if (key > node.key) {
+                node.right = removeNode(node.right, key);
+            } else {
+                if (node.left === null && node.right === null) {
+                    node = null;
+                    return node;
+                }
+            }
+        }
+        this.remove = function(key) {
+            rootNode = removeNode(rootNode, key);
         }
     }
 
@@ -118,18 +139,21 @@
     nodes.forEach(function(key) {
         binaryTree.insert(key);
     });
+
     var callback = function(key) {
-        console.log(key);
+        console.log(key)
     }
 
 
     console.log("二叉树最小值:" + binaryTree.min());
     console.log("二叉树最大值:" + binaryTree.max());
-    console.log("能否在二叉树中找到19："+ binaryTree.search(19));
+    console.log("能否在二叉树中找到19：" + binaryTree.search(19));
 
     binaryTree.inOrderTraverse(callback);
     console.log("------------------分割线------------------")
     binaryTree.preOrderTraverse(callback);
+
+    binaryTree.remove(8);
     </script>
 </body>
 
