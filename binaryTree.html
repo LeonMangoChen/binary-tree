@@ -112,6 +112,16 @@
             return searchNode(rootNode, key);
         }
 
+        var findMinNode = function(node) {
+            if (node) {
+                while (node && nodel.left !== null) {
+                    node = node.left;
+                }
+                return node;
+            }
+            return null;
+        }
+
         // 删除叶子节点
         var removeNode = function(node, key) {
             if (node.key === null) {
@@ -127,6 +137,20 @@
                     node = null;
                     return node;
                 }
+                // 删除只有一个子树的节点
+                if (node.left === null) {
+                    node = node.right;
+                    return node;
+                }
+                if (node.right) {
+                    node = node.left;
+                    return node;
+                }
+
+                // 删除有两个子树的节点值，并将该节点右子树中最小的节点值放入该节点
+                var aux = findMinNode(node.right);
+                node.key = aux.key;
+                node.right = removeNode(node.right,aux.key);
             }
         }
         this.remove = function(key) {
